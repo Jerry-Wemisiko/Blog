@@ -1,4 +1,6 @@
 from . import db
+from werkzeug.security import generate_password_hash,check_password_hash
+from datetime import datetime
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -21,7 +23,7 @@ class User(db.Model):
 
     def verify_password(self,password):
         return check_password_hash(self.pass_secure,password)
-        
+
     def __repr__(self):
         return f'User {self.username}'   
 
@@ -38,6 +40,7 @@ class Quote:
 class Article(db.Model):
     'Article model schema'
     __tablename__ = 'articles'
+
     id = db.Column(db.Integer,primary_key = True)
     article_title = db.Column(db.String)
     article_body = db.Column(db.String)
@@ -49,3 +52,17 @@ class Article(db.Model):
     article_downvotes = db.Column(db.Integer, default=0)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     comments = db.relationship('Comment',backref = 'article',lazy = "dynamic")
+
+def save_article(self):
+    db.session.add(self)
+    db.session.commit()
+
+@classmethod
+def get_all_articles(cls):
+    articles = Article.query.order_by(Article.posted.desc()).all()
+    return articles
+
+@classmethod
+def get_user_articles(cls,id):
+    articles = Article.query.filter_by(user_id=id).order_by(Article.posted.desc()).all()
+    return articles
