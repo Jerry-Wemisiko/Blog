@@ -1,12 +1,10 @@
-from flask import render_template ,flash
-from flask.helpers import url_for
+from flask import render_template ,flash,url_for,abort,redirect,request
 from flask_login import login_required
-from werkzeug.exceptions import abort
-from werkzeug.utils import redirect
 from . import main
-from .. import db
+from .. import db,photos
 from ..models import Article, User
 from ..requests import get_quotes
+
 
 @main.route('/')
 
@@ -45,6 +43,25 @@ def update_profile(username):
 
         flash('Profile has been updated successfully.')
 
-        return redirect(url_for('blog.profile', username = user.username))
+        return redirect(url_for('main.profile', username = user.username))
 
     return render_template('profile/update.html')
+
+@main.route('/profile/<username>/update/pic',methods = ['POST'])
+@login_required
+
+def update_pic(username):
+    user = User.query.filter_by(username = username).first()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.profile_pic_path = path
+
+        flash('Image has been updated succesfully')
+
+    return redirect(url_for('main.update_profile',username = username))
+
+
+
+
+
