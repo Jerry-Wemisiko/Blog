@@ -1,8 +1,9 @@
 from flask import render_template ,flash,url_for,abort,redirect,request
-from flask_login import login_required
+from flask_login import login_required,current_user
 from . import main
 from .. import db,photos
-from ..models import Article, User
+from .forms import UpdateProfile,CommentForm
+from ..models import Article, User,Comment
 from ..requests import get_quotes
 
 
@@ -85,6 +86,25 @@ def article_by_tag(tag):
     
     return render_template('article_by_tag.html',articles=articles,tag=tag)    
 
+@main.route('/article_details/<article_id>', methods = ['GET','POST'])
+@login_required
+def article_details(article_id):
 
+    form = CommentForm()
+    article=Article.query.get(article_id)
+    comments=Comment.query.filter_by(article_id=article_id).order_by(Comment.posted.desc()).all()
+    
+    if form.validate_on_submit():
+        comment = form.comment.data
+        new_comment = Comment(comment=comment,user=current_user,article=article)
+        new_comment.save_comment()
+        article.article_comments_count = article.article_comments_count+1
+
+        db.session.add(article)
+        db.session.commit()
+        flash('Comment posted')
+        return redirect(url_for('blog.article_details',article_id=article_id))
+
+    return render_template('article_details.html',comment_form=form,article=article,comments=comments)
 
 

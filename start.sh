@@ -1,4 +1,5 @@
 export MAIL_USERNAME='skyles171@gmail.com'
 export MAIL_PASSWORD='Benzs680'
+export SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://moringa:123456@localhost/blog'
 
-SECRET_KEY='secret'
+export SECRET_KEY='secret'
