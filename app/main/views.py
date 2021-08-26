@@ -62,6 +62,29 @@ def update_pic(username):
     return redirect(url_for('main.update_profile',username = username))
 
 
+@main.route('/article/new',methods = ['GET','POST'])
+@login_required
+def new_article():
+    if request.method == 'POST':
+        article_title = request.form['title']
+        article_body = request.form['body']
+        article_tag = request.form['tag']
+        filename = photos.save(request.files['photo'])
+        article_cover_path = f'photos/{filename}'
+
+        new_article = Article(article_title = article_title,article_body= article_body,article_tag = article_tag,article_cover_path=article_cover_path)
+        new_article.save_article()
+
+@main.route('/articles/tag/<tag>')
+@login_required
+def article_by_tag(tag):
+
+   
+  
+    articles=Article.query.filter_by(article_tag=tag).order_by(Article.posted.desc()).all()
+    
+    return render_template('article_by_tag.html',articles=articles,tag=tag)    
+
 
 
 
