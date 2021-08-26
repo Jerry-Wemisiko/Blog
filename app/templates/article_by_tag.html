@@ -1,13 +1,41 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <div class="articles mt-4">
-    <div class="row">
-      <div class="col-lg-9 col-md-8 col-sm-12">
-        <h3 class="text-center mt-3">{{tag}} Cloud</h3>
-   
+  <div class="row">
+    <div class="col-lg-9 col-md-8 col-sm-12">
+      <h3 class="text-center mt-3"><strong>{{tag}} Cloud</strong></h3>
+      {%if articles%} 
+        {%for article in articles%}
+        <div class="col-lg-4 col-md-6 col-sm-12 mx-auto mt-1 mb-1">
+          <div class="card">
+          
+        </div>
+        
+        {%endfor%}
+      {%else%}
+      <div class="card article mx-4 mb-3">
+        <div class="card-body">
+          <h4 class="card-header"><i class="far fa-angry mr-2"></i>Sorry, there is no article by this tag </h4>
+        </div>
       </div>
-      
-    </div> 
-   
-  </div>
+    {%endif%} 
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-12">
+      <h5 class="my-2 mt-3"><strong>Tag Cloud</strong> </h5>
+      <div class="tags">
+        <a href="#"><span class="badge badge-pill badge-default">ALL</span></a>
+        <a href="{{url_for('blog.article_by_tag',tag='Fashion')}}"><span class="badge badge-pill badge-primary">FASHION</span></a>
+        <a href="{{url_for('blog.article_by_tag',tag='Entertainment')}}"><span class="badge badge-pill badge-secondary">ENTERTAINMENT</span></a>
+        <a href="{{url_for('blog.article_by_tag',tag='Food')}}"><span class="badge badge-pill badge-success">FOOD</span></a>
+        <a href="{{url_for('blog.article_by_tag',tag='Wellness')}}"><span class="badge badge-pill badge-info">WELLNESS</span></a>
+        <a href="{{url_for('blog.article_by_tag',tag='Music')}}"><span class="badge badge-pill badge-warning">MUSIC</span></a>
+        <a href="{{url_for('blog.article_by_tag',tag='Education')}}"><span class="badge badge-pill badge-danger">EDUCATION</span></a>
+        <a href="{{url_for('blog.article_by_tag',tag='Sports')}}"><span class="badge badge-pill badge-default">SPORTS</span></a>
+        <a href="{{url_for('blog.article_by_tag',tag='Others')}}"><span class="badge badge-pill badge-light">OTHERS</span></a>
+      </div>
+    </div>
+  </div> 
+ 
+</div>
 {% endblock %}
