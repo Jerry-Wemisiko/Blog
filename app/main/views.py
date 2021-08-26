@@ -8,16 +8,16 @@ from ..requests import get_quotes
 
 
 @main.route('/')
-
 def index():
     quotes = get_quotes()
     articles = Article.get_all_articles()
     popular = Article.query.order_by(Article.article_upvotes.desc()).limit(3).all()
     return render_template ('index.html',quotes = quotes ,articles = articles,popular = popular)
 
+
+
 @main.route('/profile/<username>')
 @login_required
-
 def profile(username):
 
     user = User.query.filter_by(username = username).first()
@@ -27,9 +27,10 @@ def profile(username):
 
     return render_template('profile/profile.html', user = user)
 
+
+
 @main.route('/profile/<username>/update', methods = ['GET','POST'])
 @login_required
-
 def update_profile(username):
     user = User.query.filter_by(username = username).first()
     if user is None:
@@ -48,9 +49,10 @@ def update_profile(username):
 
     return render_template('profile/update.html')
 
+
+
 @main.route('/profile/<username>/update/pic',methods = ['POST'])
 @login_required
-
 def update_pic(username):
     user = User.query.filter_by(username = username).first()
     if 'photo' in request.files:
@@ -61,6 +63,7 @@ def update_pic(username):
         flash('Image has been updated succesfully')
 
     return redirect(url_for('main.update_profile',username = username))
+
 
 
 @main.route('/article/new',methods = ['GET','POST'])
@@ -76,15 +79,17 @@ def new_article():
         new_article = Article(article_title = article_title,article_body= article_body,article_tag = article_tag,article_cover_path=article_cover_path)
         new_article.save_article()
 
+
+
 @main.route('/articles/tag/<tag>')
 @login_required
-def article_by_tag(tag):
-
-   
+def article_by_tag(tag):  
   
     articles=Article.query.filter_by(article_tag=tag).order_by(Article.posted.desc()).all()
     
     return render_template('article_by_tag.html',articles=articles,tag=tag)    
+
+
 
 @main.route('/article_details/<article_id>', methods = ['GET','POST'])
 @login_required
@@ -108,3 +113,26 @@ def article_details(article_id):
     return render_template('article_details.html',comment_form=form,article=article,comments=comments)
 
 
+
+@main.route('/comment/delete/<comment_id>/<article_id>')
+@login_required
+def delete_comment(comment_id,article_id):
+    comment = Comment.query.get(comment_id)
+    db.session.delete(comment)
+    article=Article.query.get(article_id)
+    article.article_comments_count = article.article_comments_count-1
+    db.session.add(article)
+    db.session.commit()
+    flash('You deleted a comment')
+    return redirect(url_for('blog.article_details',article_id=article_id))
+
+
+
+@main.route('/article/delete/<article_id>')
+@login_required
+def delete_article(article_id):
+  article = Article.query.get(article_id)
+  db.session.delete(article)
+  db.session.commit()
+  flash('You deleted an article')
+  return redirect(url_for('blog.index'))
