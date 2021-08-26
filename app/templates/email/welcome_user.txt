@@ -1,0 +1,6 @@
+Hello {{user.username}}
+Welcome to My Blog-spot!
+Start your blogging  journey today with us by writing your first blog
+
+Regards,
+Jerry Skyles
