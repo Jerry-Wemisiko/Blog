@@ -4,4 +4,10 @@
     min-height: 150vh;
     box-sizing: border-box;
    }
-  
+   .navbar-brand{
+    font-family: 'Satisfy', sans-serif;
+  }
+  .nav-link{
+    font-family:'Sintony', sans-serif;
+    color: #fff;
+  }
