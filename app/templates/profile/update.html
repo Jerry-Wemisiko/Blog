@@ -23,7 +23,7 @@
       {% if user == current_user %}
         <div class="container update-pic mt-3">
           <p><i class="far fa-user mr-3"></i>Update Profile Pic</p>
-          <form action="{{url_for('blog.update_pic',username=user.username)}}" method="post" enctype = "multipart/form-data">
+          <form action="{{url_for('main.update_pic',username=user.username)}}" method="post" enctype = "multipart/form-data">
             <div class="file-field">
               <div class="btn btn-primary btn-sm float-left">
                 <span>Choose file</span>

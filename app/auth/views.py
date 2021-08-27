@@ -1,8 +1,7 @@
 from app.email import mail_message
-from flask.globals import request
 from app.auth.forms import LoginForm, RegistrationForm
 from flask import render_template,redirect,url_for,flash
-from flask_login import login_user,logout_user,login_required
+from flask_login import login_user,logout_user,login_required,request
 from . import auth
 from .. import db
 from ..email import mail_message
