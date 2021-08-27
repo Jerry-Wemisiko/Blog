@@ -6,42 +6,42 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
       <ul class="navbar-nav mr-auto text-white">
         <li class="nav-item ">
-          <a class="nav-link" href="{{url_for('blog.index')}}">Home
+          <a class="nav-link" href="{{url_for('main.index')}}">Home
           </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="{{url_for('blog.article_by_tag',tag='Fashion')}}">Fashion</a>
+          <a class="nav-link" href="{{url_for('main.article_by_tag',tag='Fashion')}}">Fashion</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="{{url_for('blog.article_by_tag',tag='Entertainment')}}">Entertainment</a>
+          <a class="nav-link" href="{{url_for('main.article_by_tag',tag='Entertainment')}}">Entertainment</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="{{url_for('blog.article_by_tag',tag='Food')}}">Food</a>
+          <a class="nav-link" href="{{url_for('main.article_by_tag',tag='Food')}}">Food</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="{{url_for('blog.article_by_tag',tag='Wellness')}}">Wellness</a>
+          <a class="nav-link" href="{{url_for('main.article_by_tag',tag='Wellness')}}">Wellness</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="{{url_for('blog.article_by_tag',tag='Music')}}">Music</a>
+          <a class="nav-link" href="{{url_for('main.article_by_tag',tag='Music')}}">Music</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="{{url_for('blog.article_by_tag',tag='Sports')}}">Sports</a>
+          <a class="nav-link" href="{{url_for('main.article_by_tag',tag='Sports')}}">Sports</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="{{url_for('blog.article_by_tag',tag='Education')}}">Education</a>
+          <a class="nav-link" href="{{url_for('main.article_by_tag',tag='Education')}}">Education</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="{{url_for('blog.article_by_tag',tag='Others')}}">Others</a>
+          <a class="nav-link" href="{{url_for('main.article_by_tag',tag='Others')}}">Others</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto text-white">
         {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{{url_for('blog.new_article')}}"><button type="button" class="btn btn-success btn-sm btn-rounded"><strong>POST ARTICLE</strong> </button>
+          <a class="nav-link" href="{{url_for('main.new_article')}}"><button type="button" class="btn btn-success btn-sm btn-rounded"><strong>POST ARTICLE</strong> </button>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{url_for('blog.profile',username=current_user.username)}}"><span class="badge badge-primary"><i class="fas fa-user"></i> {{current_user.username | capitalize}}</span>
+          <a class="nav-link" href="{{url_for('main.profile',username=current_user.username)}}"><span class="badge badge-primary"><i class="fas fa-user"></i> {{current_user.username | capitalize}}</span>
           </a>
         </li>
         <li class="nav-item">
